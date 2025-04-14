@@ -1,0 +1,137 @@
+// ---------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------
+
+import * as React from "react";
+import { useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { LoaderCircle } from "lucide-react";
+
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Separator } from "@/components/ui/separator";
+
+import { loginSchema, TLoginSchema } from "@/types/types";
+
+export default function LoginForm(): React.JSX.Element {
+	const loginForm = useForm<TLoginSchema>({
+		resolver: zodResolver(loginSchema),
+		defaultValues: {
+			email: "",
+			password: "",
+			rememberMe: false
+		}
+	});
+
+	const onSubmit = async () => {}
+
+	return (
+		<div className="flex justify-center items-center h-lvh">
+			<Form {...loginForm}>
+				<form className="w-96" onSubmit={loginForm.handleSubmit(onSubmit)}>
+					<div className="w-full place-items-center my-4">
+						<h1 className="text-2xl font-bold">LOG IN</h1>
+					</div>
+
+					<FormField
+						control={loginForm.control}
+						name="email"
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel className="text-xs font-semibold mt-2">
+									Email <span className="text-red-500">*</span>
+								</FormLabel>
+
+								<FormControl>
+									<Input
+										type="email"
+										placeholder="yourname@example.com"
+										autoCapitalize="off"
+										autoCorrect="off"
+										spellCheck="false"
+										{...field}
+									/>
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+					<FormField
+						control={loginForm.control}
+						name="password"
+						render={({ field }) => (
+							<FormItem>
+								<FormLabel className="text-xs font-semibold mt-2">
+									Password <span className="text-red-500">*</span>
+								</FormLabel>
+
+								<FormControl>
+									<Input
+										type="password"
+										placeholder="••••••••••••"
+										{...field}
+									/>
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+
+					<div className="flex justify-between my-2">
+						<div className="flex space-x-2 items-center">
+							<Checkbox
+								className=""
+								id="remember-me"
+								{...loginForm.register("rememberMe")}
+							/>
+							<Label className="text-xs font-semibold" htmlFor="remember-me">
+								Remember me
+							</Label>
+						</div>
+						<Link
+							className="text-xs font-semibold hover:underline"
+							to="/forgot-password"
+						>
+							Forgot password?
+						</Link>
+					</div>
+
+					<Button
+						type="submit"
+						className="w-full my-4 bg-blue-500 cursor-pointer hover:bg-blue-700 disabled:bg-gray-800"
+						disabled={loginForm.formState.isSubmitting}
+					>
+						{loginForm.formState.isSubmitting && (
+							<LoaderCircle className="w-4 h-4 animate-spin" />
+						)}
+						{!loginForm.formState.isSubmitting && `Log in`}
+					</Button>
+
+					<Separator className="my-4" />
+
+					<div className="flex flex-col items-center">
+						<p className="text-xs font-light place-items-center my-2">
+							Or continue with?
+						</p>
+
+						<div className="flex space-x-12">
+							<Button variant={`secondary`} size={`icon`}></Button>
+							<Button variant={`secondary`} size={`icon`}></Button>
+							<Button variant={`secondary`} size={`icon`}></Button>
+						</div>
+
+						<p className="my-4 text-xs">
+							Don&apos;t have an account?{" "}
+							<Link className="text-blue-500 hover:underline" to={`/signup`}>
+								Sign up
+							</Link>
+						</p>
+					</div>
+				</form>
+			</Form>
+		</div>
+	);
+}
