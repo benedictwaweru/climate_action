@@ -5,7 +5,7 @@
 import { z } from "zod";
 
 export const signupSchema = z.object({
-	fullName: z.string(),
+	fullName: z.string().refine(val => val !== "", { message: `Please enter your name` }),
 	email: z.string().email({ message: `Please enter a valid email address` }),
 	password: z
 		.string()
@@ -15,8 +15,11 @@ export const signupSchema = z.object({
 			`Password should contain uppercase, lowercase, special characters and digits`
 		),
 	confirmPassword: z.string(),
-	acceptTerms: z.boolean().default(false)
-}).refine(data => data.password === data.confirmPassword, { message: `Passwords do not match`, path: ["confirmPassword"] });
+	acceptTerms: z.boolean().refine(val => val === true, { message: `You must accept terms and conditions` })
+}).refine(
+	data => data.password === data.confirmPassword,
+	{ message: `Passwords do not match`, path: ["confirmPassword"] }
+);
 
 export const loginSchema = z.object({
 	email: z.string().email({ message: `Please enter a valid email address` }),

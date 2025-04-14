@@ -7,9 +7,23 @@ import { Link } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoaderCircle } from "lucide-react";
 
+import {
+	AppleBlackIcon,
+	GoogleIcon,
+	MicrosoftIcon,
+} from "@/components/common/Icons";
+import { PasswordInput } from "@/components/common/PasswordInput";
+
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import {
+	Form,
+	FormControl,
+	FormField,
+	FormItem,
+	FormLabel,
+	FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
@@ -22,11 +36,13 @@ export default function LoginForm(): React.JSX.Element {
 		defaultValues: {
 			email: "",
 			password: "",
-			rememberMe: false
-		}
+			rememberMe: false,
+		},
 	});
 
-	const onSubmit = async () => {}
+	const onSubmit = async (data: TLoginSchema) => {
+		console.log(data);
+	};
 
 	return (
 		<div className="flex justify-center items-center h-lvh">
@@ -55,7 +71,7 @@ export default function LoginForm(): React.JSX.Element {
 										{...field}
 									/>
 								</FormControl>
-								<FormMessage />
+								<FormMessage className="text-xs" />
 							</FormItem>
 						)}
 					/>
@@ -69,13 +85,9 @@ export default function LoginForm(): React.JSX.Element {
 								</FormLabel>
 
 								<FormControl>
-									<Input
-										type="password"
-										placeholder="••••••••••••"
-										{...field}
-									/>
+									<PasswordInput {...field} />
 								</FormControl>
-								<FormMessage />
+								<FormMessage className="text-xs" />
 							</FormItem>
 						)}
 					/>
@@ -83,8 +95,11 @@ export default function LoginForm(): React.JSX.Element {
 					<div className="flex justify-between my-2">
 						<div className="flex space-x-2 items-center">
 							<Checkbox
-								className=""
 								id="remember-me"
+								checked={loginForm.watch("rememberMe")}
+								onCheckedChange={(value) =>
+									loginForm.setValue("rememberMe", Boolean(value))
+								}
 								{...loginForm.register("rememberMe")}
 							/>
 							<Label className="text-xs font-semibold" htmlFor="remember-me">
@@ -92,7 +107,7 @@ export default function LoginForm(): React.JSX.Element {
 							</Label>
 						</div>
 						<Link
-							className="text-xs font-semibold hover:underline"
+							className="text-blue-500 text-xs font-semibold hover:underline"
 							to="/forgot-password"
 						>
 							Forgot password?
@@ -118,9 +133,27 @@ export default function LoginForm(): React.JSX.Element {
 						</p>
 
 						<div className="flex space-x-12">
-							<Button variant={`secondary`} size={`icon`}></Button>
-							<Button variant={`secondary`} size={`icon`}></Button>
-							<Button variant={`secondary`} size={`icon`}></Button>
+							<Button
+								className="text-xs shadow-sm cursor-pointer hover:scale-110"
+								variant="secondary"
+								size="default"
+							>
+								<GoogleIcon /> Google
+							</Button>
+							<Button
+								className="text-xs shadow-sm cursor-pointer hover:scale-110"
+								variant="secondary"
+								size="default"
+							>
+								<AppleBlackIcon /> Apple
+							</Button>
+							<Button
+								className="text-xs shadow-sm cursor-pointer hover:scale-110"
+								variant="secondary"
+								size="default"
+							>
+								<MicrosoftIcon /> Microsoft
+							</Button>
 						</div>
 
 						<p className="my-4 text-xs">
