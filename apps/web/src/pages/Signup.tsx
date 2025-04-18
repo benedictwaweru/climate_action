@@ -1,13 +1,26 @@
 // ---------------------------------------------------------------------------------
+// Copyright 2025 Benedict Waweru
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 // ---------------------------------------------------------------------------------
 
-import * as React from "react";
+//import * as React from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Link } from "react-router-dom";
 import { LoaderCircle } from "lucide-react";
 
-import { AppleBlackIcon, GoogleIcon, MicrosoftIcon } from "@/components/common/Icons";
+import { GoogleIcon, MicrosoftIcon } from "@/components/common/Icons";
 import { PasswordInput } from "@/components/common/PasswordInput";
 
 import { Button } from "@/components/ui/button";
@@ -26,7 +39,7 @@ import { Separator } from "@/components/ui/separator";
 
 import { signupSchema, TSignupSchema } from "@/types/types";
 
-export default function SignupForm(): React.JSX.Element {
+export default function SignupForm() {
 	const signupForm = useForm<TSignupSchema>({
 		resolver: zodResolver(signupSchema),
 		defaultValues: {
@@ -47,7 +60,7 @@ export default function SignupForm(): React.JSX.Element {
 			<Form {...signupForm}>
 				<form className="w-96" onSubmit={signupForm.handleSubmit(onSubmit)}>
 					<div className="w-full place-items-center my-4">
-						<h1 className="text-2xl font-bold">SIGN UP</h1>
+						<h1 className="text-2xl font-bold">Create an account</h1>
 					</div>
 
 					<FormField
@@ -139,12 +152,12 @@ export default function SignupForm(): React.JSX.Element {
 							{...signupForm.register("acceptTerms")}
 						/>
 						<Label className="text-xs font-semibold" htmlFor="accept-terms">
-							Accept
+							Agree to our
 							<Link
 								className="text-blue-500 hover:underline"
-								to="/terms-and-conditions"
+								to="/terms-of-service"
 							>
-								terms and conditions
+								Terms of Service
 							</Link>
 						</Label>
 					</div>
@@ -163,7 +176,7 @@ export default function SignupForm(): React.JSX.Element {
 						{signupForm.formState.isSubmitting && (
 							<LoaderCircle className="w-4 h-4 animate-spin" />
 						)}
-						{!signupForm.formState.isSubmitting && `Sign up`}
+						{!signupForm.formState.isSubmitting && `Create`}
 					</Button>
 
 					<Separator className="my-4" />
@@ -181,13 +194,13 @@ export default function SignupForm(): React.JSX.Element {
 							>
 								<GoogleIcon /> Google
 							</Button>
-							<Button
+							{/* <Button
 								className="text-xs shadow-sm cursor-pointer hover:scale-110"
 								variant="secondary"
 								size="default"
 							>
 								<AppleBlackIcon /> Apple
-							</Button>
+							</Button> */}
 							<Button
 								className="text-xs shadow-sm cursor-pointer hover:scale-110"
 								variant="secondary"

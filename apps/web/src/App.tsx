@@ -7,6 +7,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import LoginForm from "@/pages/Login";
 import SignupForm from "@/pages/Signup";
+import RequestResetEmail from "@/pages/RequestResetEmail";
 
 const queryClient = new QueryClient();
 
@@ -18,6 +19,7 @@ export default function App(): React.JSX.Element {
 					<Route />
 					<Route path="/login" element={<LoginForm />} />
 					<Route path="/signup" element={<SignupForm />} />
+					<Route path="/forgot-password" element={<RequestResetEmail />} />
 				</Routes>
 			</BrowserRouter>
 		</QueryClientProvider>

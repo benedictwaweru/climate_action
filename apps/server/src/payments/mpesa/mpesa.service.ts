@@ -29,7 +29,7 @@ export class MpesaService {
 		return this.configService.get<string>("MPESA_SHORT_CODE")!;
 	}
 
-	private getAuthCredentials() {
+	private getAuthCredentials(): string {
 		const consumerKey = this.getMPesaConsumerKey();
 		const consumerSecretKey = this.getMPesaConsumerSecretKey();
 
@@ -48,7 +48,13 @@ export class MpesaService {
 		return response.data.access_token;
 	}
 
-	async initiateSTKPush() {
+	/**
+	 * @method initiateSTKPush - Implement this STK push with axios.
+	 * Interacts with @url {/mpesa/stkpush/v1/processrequest}
+	 */
+	async initiateSTKPush(): Promise<void> {
 		//const authToken = await this.getAuthToken();
 	}
+
+	async reverseMPesaTransaction(): Promise<void> {}
 }

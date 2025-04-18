@@ -13,3 +13,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 // ---------------------------------------------------------------------------------
+
+import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader } from "@/components/ui/sidebar";
+
+//interface SidebarProps {}
+
+export function AppSidebar() {
+	return (
+		<Sidebar>
+			<SidebarHeader />
+			<SidebarContent></SidebarContent>
+			<SidebarFooter />
+		</Sidebar>
+	);
+}
